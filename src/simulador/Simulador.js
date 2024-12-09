@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SolicitarForm from './solicitar';
 import Prestamos from './prestamos';
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 
 const Simulador = () => {
 
@@ -73,9 +73,33 @@ const Simulador = () => {
       setLoading(false);
       return;
     }
+
+    setTimeout(() => {
+      if (formData.estaLaborando == 'No' || formData.sueldo < 1025) {
+        setIsApproved(false);
+        setLoading(false);
+        Swal.fire({
+          title: 'Lo Sentimos!',
+          text: 'Tu préstamo no fue aprobado',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        // Limpiar el formulario
+        cleanForm();
+
+        return;
+      } else {
+        procesaAprobado();
+
+      }
+
+    }, 3000);
+  };
+
+  const procesaAprobado = () => {
     const fechaHoy = new Date();
     const dia = fechaHoy.getDate();
-    const mes = fechaHoy.getMonth() + 1; // Los meses empiezan desde 0
+    const mes = fechaHoy.getMonth() + 1;
     const anio = fechaHoy.getFullYear();
     const fechaFormateada = `${dia.toString().padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${anio}`;
 
@@ -90,40 +114,41 @@ const Simulador = () => {
       cuota: obtenerCuotaMenual(formData.monto, formData.plazo)
     };
 
-    // Actualizar el estado local de préstamos
     const updatedPrestamos = [...prestamos, newPrestamo];
     setPrestamos(updatedPrestamos);
 
-    // Guardar los préstamos en localStorage
     localStorage.setItem('prestamos', JSON.stringify(updatedPrestamos));
 
-    setTimeout(() => {
-      if (formData.estaLaborando == 'No' || formData.sueldo < 1025) {
-        setIsApproved(false);
-        setLoading(false);
-        setSelectedOption('verPrestamos'); // Cambiar la vista a "Ver mis préstamos"
-      }
-      setIsApproved(true);
-      setLoading(false);
-      setSelectedOption('verPrestamos'); // Cambiar la vista a "Ver mis préstamos"
-    }, 3000);
-
+    setIsApproved(true);
+    setLoading(false);
+    setSelectedOption('verPrestamos');
     cleanForm();
-  };
-
+  }
   const obtenerCuotaMenual = (monto, plazo) => {
-
     const montoConInteres = monto * 0.141; // Aplica el interés
     const cuotas = plazo / 30; // Número de cuotas según el plazo
-    return montoConInteres / cuotas;
+    const cuotaMensual = montoConInteres / cuotas;
+    return parseFloat(cuotaMensual.toFixed(2)); // Limita a 2 decimales y lo convierte de nuevo a número
   };
+
 
 
   const cleanForm = () => {
-    setFormData("");
-    setPropiedades("");
-    setLaborando("");
-  }
+    // Restablecer los campos del formulario a sus valores iniciales
+    setFormData({
+      monto: '',
+      sueldo: '',
+      plazo: '',
+      nivelEstudio: '',
+      motivoPrestamo: '',
+      estaLaborando: false,
+      noEstaLaborando: false,
+      terminosAceptados: false,
+    });
+    setLaborando('');
+    setPropiedades('');
+  };
+  
   const renderMenu = () => {
 
 
@@ -140,26 +165,26 @@ const Simulador = () => {
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" onClick={() => setSelectedOption('solicitar')}>Solicitar préstamo</a>
+                <a class="nav-link pointer" onClick={() => setSelectedOption('solicitar')}>Solicitar préstamo</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" onClick={() => setSelectedOption('verPrestamos')}>Ver mis préstamos</a>
+                <a class="nav-link pointer" onClick={() => setSelectedOption('verPrestamos')}>Ver mis préstamos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" onClick={() => setSelectedOption('historial')}>Historial de pagos</a>
+                <a class="nav-link pointer" onClick={() => setSelectedOption('historial')}>Historial de pagos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" onClick={() => setSelectedOption('configuracion')}>Configuración</a>
+                <a class="nav-link pointer" onClick={() => setSelectedOption('configuracion')}>Configuración</a>
               </li>
             </ul>
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                USUARIO
+                {nombre}
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li class="text-center"><a class="dropdown-item center" >{nombre + " " + apellido}</a></li>
-                <li class="text-center"><a class="dropdown-item" >{email}</a></li>
-                <li class="text-center"><a class="dropdown-item" onClick={() => handleLogout()}>Salir</a></li>
+                <li class="text-center"><a class="dropdown-item center pointer" >{nombre + " " + apellido}</a></li>
+                <li class="text-center"><a class="dropdown-item pointer" >{email}</a></li>
+                <li class="text-center"><a class="dropdown-item pointer" onClick={() => handleLogout()}>Salir</a></li>
               </ul>
             </div>
           </div>
@@ -172,12 +197,11 @@ const Simulador = () => {
   return (
     <div>
       {renderMenu()}
-      <h1 className='text-center'>Simulador de Préstamos</h1>
-      <p>Bienvenido al simulador de préstamos.</p>
+      <h1 className='text-center'>Bienvenido al Simulador de Préstamos</h1>
       <p>Obtén tu préstamo 100% online!</p>
       {selectedOption === 'solicitar' && (
         <div>
-          <h2>Formulario de Solicitud de Préstamo</h2>
+          <h3>Formulario de Solicitud de Préstamo</h3>
           {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
           {isApproved && <div style={{ color: 'green' }}>¡Préstamo aprobado!</div>}
           <SolicitarForm

@@ -1,6 +1,7 @@
 // src/login/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Importa useNavigate
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,20 +14,36 @@ const Login = () => {
     const savedUserData = JSON.parse(localStorage.getItem('userData'));
 
     if (!savedUserData) {
-        alert('No hay usuarios registrados. Por favor, regístrate primero.');
-        return;
+      Swal.fire({
+        title: 'Alerta!',
+        text: 'No hay usuarios registrados. Por favor, regístrate primero.',
+        icon: 'info',
+        confirmButtonText: 'OK'
+      });
+      return;
     }
 
     if (email === savedUserData.email && password === savedUserData.password) {
-        navigate('/simulador'); 
+      navigate('/simulador');
     } else {
-        alert('Credenciales incorrectas');
+      Swal.fire({
+        title: '¡Error!',
+        text: 'Credenciales incorrectas.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return;
     }
-};
+  };
 
 
   const handleGoToRegister = () => {
-    navigate('/register'); // Redirige a la página de registro
+    navigate('/register');
+  };
+
+  const handleGoToFinalizar = () => {
+    localStorage.removeItem('userData');
+    localStorage.removeItem('prestamos');
   };
 
   return (
@@ -58,6 +75,9 @@ const Login = () => {
       <p>
         No tienes cuenta?{' '}
         <button onClick={handleGoToRegister}>Regístrate aquí</button>
+      </p>
+      <p>
+      <a class="nav-link pointer" onClick={handleGoToFinalizar}>Finalizar simulación</a>
       </p>
     </div>
   );

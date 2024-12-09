@@ -1,6 +1,7 @@
 // src/Register.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Importa useNavigate
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Register = ({ onSwitchToLogin }) => {
     const [email, setEmail] = useState('');
@@ -30,7 +31,21 @@ const Register = ({ onSwitchToLogin }) => {
         e.preventDefault();
 
         if (!nombre || !apellido || !dni || !edad || !email || !password || !departamento || !distrito || !confirmPassword || !telefono) {
-            alert('Por favor, completa todos los campos.');
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Por favor, completa todos los campos.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        if (password !== confirmPassword) {
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Las contraseñas no coinciden.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -49,8 +64,14 @@ const Register = ({ onSwitchToLogin }) => {
         localStorage.setItem('userData', JSON.stringify(userData));
 
 
-        alert('¡Registro exitoso!');
-        navigate('/');
+        Swal.fire({
+            title: '¡Registro exitoso!',
+            text: 'Ahora puedes iniciar sesión.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        }).then(() => {
+            navigate('/'); // Redirige al login
+        });
 
 
     };

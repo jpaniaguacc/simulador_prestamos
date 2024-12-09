@@ -186,7 +186,7 @@ const SolicitarForm = ({
         />
       </div>
 
-      <button type="submit" disabled={loading}>
+      <button type="submit" disabled={loading} class="btn btn-success">
         {loading ? <span>Loading...</span> : 'Solicitar préstamo'}
       </button>
     </form>
