@@ -11,6 +11,8 @@ const SolicitarForm = ({
   setPropiedades,
   handleSubmit,
   loading,
+  handleLaborandoChange,
+  handlePropiedadesChange,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -114,16 +116,16 @@ const SolicitarForm = ({
       </div>
       <div className='group-box-input'>
         <div className="group-input">
-          <label htmlFor="estáLaborando">¿Está laborando?</label>
+          <label htmlFor="laborando">¿Está laborando?</label>
           <div className="group-input-radio">
             <input
               className="input-radio"
               type="radio"
               id="laborandoSí"
-              name="estáLaborando"
-              value="Sí"
-              checked={laborando === "Sí"}
-              onChange={(e) => setLaborando(e.target.value)}
+              name="laborando"
+              value="true"
+              checked={formData.laborando === true}
+              onChange={handleLaborandoChange}
               required
             />
             <label htmlFor="laborandoSí">Sí</label>
@@ -132,10 +134,10 @@ const SolicitarForm = ({
               className="input-radio"
               type="radio"
               id="laborandoNo"
-              name="estáLaborando"
-              value="No"
-              checked={laborando === "No"}
-              onChange={(e) => setLaborando(e.target.value)}
+              name="laborando"
+              value="false"
+              checked={formData.laborando === false}
+              onChange={handleLaborandoChange}
               required
             />
             <label htmlFor="laborandoNo">No</label>
@@ -151,8 +153,8 @@ const SolicitarForm = ({
               id="propiedadesSi"
               name="propiedades"
               value="Sí"
-              checked={propiedades === "Sí"}
-              onChange={(e) => setPropiedades(e.target.value)}
+              checked={formData.propiedades === true}
+              onChange={handlePropiedadesChange}
               required
             />
             <label htmlFor="propiedadesSi">Sí</label>
@@ -163,8 +165,8 @@ const SolicitarForm = ({
               id="propiedadesNo"
               name="propiedades"
               value="No"
-              checked={propiedades === "No"}
-              onChange={(e) => setPropiedades(e.target.value)}
+              checked={formData.propiedades === false}
+              onChange={handlePropiedadesChange}
               required
             />
             <label htmlFor="propiedadesNo">No</label>
@@ -186,7 +188,7 @@ const SolicitarForm = ({
         />
       </div>
 
-      <button type="submit" disabled={loading} class="btn btn-success">
+      <button type="submit" disabled={loading} className="btn btn-success">
         {loading ? <span>Loading...</span> : 'Solicitar préstamo'}
       </button>
     </form>

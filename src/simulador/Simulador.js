@@ -14,8 +14,8 @@ const Simulador = () => {
     plazo: '',
     nivelEstudio: '',
     motivoPrestamo: '',
-    estaLaborando: false,
-    noEstaLaborando: false,
+    laborando: false,
+    propiedades: false,
     terminosAceptados: false,
   });
   const [loading, setLoading] = useState(false);
@@ -47,14 +47,32 @@ const Simulador = () => {
   const nivelesEstudio = ['Primaria', 'Secundaria', 'Universitario', 'Postgrado'];
   const motivosPrestamo = ['Compra de vivienda', 'Remodelar vivienda', 'Compra de vehiculo', 'Educación', 'Salud'];
 
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    
+    // Si es un checkbox, se actualiza como booleano, si es otro tipo de input, se toma el valor del input.
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
-
+  const handleLaborandoChange = (e) => {
+    const value = e.target.value === "true"; // Convierte el valor a booleano
+    setFormData((prevData) => ({
+      ...prevData,
+      laborando: value,
+    }));
+  };
+  
+  const handlePropiedadesChange = (e) => {
+    const value = e.target.value === "Sí"; // Convierte el valor a booleano
+    setFormData((prevData) => ({
+      ...prevData,
+      propiedades: value,
+    }));
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -75,7 +93,7 @@ const Simulador = () => {
     }
 
     setTimeout(() => {
-      if (formData.estaLaborando == 'No' || formData.sueldo < 1025) {
+      if (formData.laborando === false || Number(formData.sueldo) < 1025) {
         setIsApproved(false);
         setLoading(false);
         Swal.fire({
@@ -84,19 +102,16 @@ const Simulador = () => {
           icon: 'error',
           confirmButtonText: 'OK'
         });
-        // Limpiar el formulario
-        cleanForm();
-
         return;
       } else {
         procesaAprobado();
-
       }
-
     }, 3000);
   };
 
   const procesaAprobado = () => {
+    setIsApproved(true);
+
     const fechaHoy = new Date();
     const dia = fechaHoy.getDate();
     const mes = fechaHoy.getMonth() + 1;
@@ -106,12 +121,12 @@ const Simulador = () => {
     // Guardar el préstamo
     const newPrestamo = {
       ...formData,
-      laborando,
-      propiedades,
+      laborando: laborando,
+      propiedades: propiedades,
       id: Date.now(), // Generar un ID único para cada préstamo
       estado: isApproved ? "Aprobado" : "Desaprobado",
       fecha: fechaFormateada,
-      cuota: obtenerCuotaMenual(formData.monto, formData.plazo)
+      cuota: obtenerCuotaMensual(formData.monto, formData.plazo)
     };
 
     const updatedPrestamos = [...prestamos, newPrestamo];
@@ -119,12 +134,12 @@ const Simulador = () => {
 
     localStorage.setItem('prestamos', JSON.stringify(updatedPrestamos));
 
-    setIsApproved(true);
+
     setLoading(false);
     setSelectedOption('verPrestamos');
     cleanForm();
   }
-  const obtenerCuotaMenual = (monto, plazo) => {
+  const obtenerCuotaMensual = (monto, plazo) => {
     const montoConInteres = monto * 0.141; // Aplica el interés
     const cuotas = plazo / 30; // Número de cuotas según el plazo
     const cuotaMensual = montoConInteres / cuotas;
@@ -141,14 +156,14 @@ const Simulador = () => {
       plazo: '',
       nivelEstudio: '',
       motivoPrestamo: '',
-      estaLaborando: false,
-      noEstaLaborando: false,
+      laborando: false,
+      propiedades: false,
       terminosAceptados: false,
     });
     setLaborando('');
     setPropiedades('');
   };
-  
+
   const renderMenu = () => {
 
 
@@ -203,7 +218,6 @@ const Simulador = () => {
         <div>
           <h3>Formulario de Solicitud de Préstamo</h3>
           {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-          {isApproved && <div style={{ color: 'green' }}>¡Préstamo aprobado!</div>}
           <SolicitarForm
             formData={formData}
             laborando={laborando}
@@ -215,6 +229,9 @@ const Simulador = () => {
             setPropiedades={setPropiedades}
             handleSubmit={handleSubmit}
             loading={loading}
+            handleLaborandoChange = {handleLaborandoChange}
+            handlePropiedadesChange = {handlePropiedadesChange}
+
           />
         </div>
       )}

@@ -39,6 +39,15 @@ const Register = ({ onSwitchToLogin }) => {
             });
             return;
         }
+        if (edad < 18) {
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Debes ser mayor de edad.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         if (password !== confirmPassword) {
             Swal.fire({
                 title: '¡Error!',
