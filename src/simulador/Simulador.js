@@ -21,8 +21,8 @@ const Simulador = () => {
   const [loading, setLoading] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [laborando, setLaborando] = useState("");
-  const [propiedades, setPropiedades] = useState("");
+  const [laborando, setLaborando] = useState(false);
+  const [propiedades, setPropiedades] = useState(false);
   const [prestamos, setPrestamos] = useState([]);
 
   const [nombre, setNombre] = useState("");
@@ -50,7 +50,7 @@ const Simulador = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     // Si es un checkbox, se actualiza como booleano, si es otro tipo de input, se toma el valor del input.
     setFormData((prevData) => ({
       ...prevData,
@@ -58,7 +58,7 @@ const Simulador = () => {
     }));
   };
   const handleLaborandoChange = (e) => {
-    const value = e.target.value === "true"; // Convierte el valor a booleano
+    const value = e.target.value === "true"; // Convierte a booleano
     setFormData((prevData) => ({
       ...prevData,
       laborando: value,
@@ -66,18 +66,18 @@ const Simulador = () => {
   };
   
   const handlePropiedadesChange = (e) => {
-    const value = e.target.value === "Sí"; // Convierte el valor a booleano
+    const value = e.target.value === "true"; // Convierte a booleano
     setFormData((prevData) => ({
       ...prevData,
       propiedades: value,
     }));
   };
   
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
-    setIsApproved(false);
 
     // Validaciones
     if (formData.monto < 500 || formData.monto > 10000) {
@@ -93,7 +93,7 @@ const Simulador = () => {
     }
 
     setTimeout(() => {
-      if (formData.laborando === false || Number(formData.sueldo) < 1025) {
+      if (!formData.laborando || Number(formData.sueldo) < 1025) {
         setIsApproved(false);
         setLoading(false);
         Swal.fire({
@@ -104,13 +104,14 @@ const Simulador = () => {
         });
         return;
       } else {
+        setIsApproved(true);
         procesaAprobado();
       }
+      
     }, 3000);
   };
 
   const procesaAprobado = () => {
-    setIsApproved(true);
 
     const fechaHoy = new Date();
     const dia = fechaHoy.getDate();
@@ -118,16 +119,18 @@ const Simulador = () => {
     const anio = fechaHoy.getFullYear();
     const fechaFormateada = `${dia.toString().padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${anio}`;
 
+    console.log("isApproved: ",  isApproved);
     // Guardar el préstamo
     const newPrestamo = {
       ...formData,
-      laborando: laborando,
-      propiedades: propiedades,
-      id: Date.now(), // Generar un ID único para cada préstamo
-      estado: isApproved ? "Aprobado" : "Desaprobado",
+      laborando: formData.laborando, // Usa los valores actualizados
+      propiedades: formData.propiedades,
+      id: Date.now(),
+      estado: "Aprobado",
       fecha: fechaFormateada,
-      cuota: obtenerCuotaMensual(formData.monto, formData.plazo)
+      cuota: obtenerCuotaMensual(formData.monto, formData.plazo),
     };
+    
 
     const updatedPrestamos = [...prestamos, newPrestamo];
     setPrestamos(updatedPrestamos);
@@ -229,8 +232,8 @@ const Simulador = () => {
             setPropiedades={setPropiedades}
             handleSubmit={handleSubmit}
             loading={loading}
-            handleLaborandoChange = {handleLaborandoChange}
-            handlePropiedadesChange = {handlePropiedadesChange}
+            handleLaborandoChange={handleLaborandoChange}
+            handlePropiedadesChange={handlePropiedadesChange}
 
           />
         </div>

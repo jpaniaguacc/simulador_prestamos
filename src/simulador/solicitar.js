@@ -152,7 +152,7 @@ const SolicitarForm = ({
               type="radio"
               id="propiedadesSi"
               name="propiedades"
-              value="Sí"
+              value="true"
               checked={formData.propiedades === true}
               onChange={handlePropiedadesChange}
               required
@@ -164,7 +164,7 @@ const SolicitarForm = ({
               type="radio"
               id="propiedadesNo"
               name="propiedades"
-              value="No"
+              value="false"
               checked={formData.propiedades === false}
               onChange={handlePropiedadesChange}
               required
