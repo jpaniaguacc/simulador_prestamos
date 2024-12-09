@@ -1,10 +1,13 @@
 import React from 'react';
 
-const Prestamos = ({ prestamos }) => {
+const Prestamos = () => {
+
+    const prestamosData = JSON.parse(localStorage.getItem('prestamos')) || [];
+
   return (
     <div>
       <h2>Detalle de Préstamos Realizados</h2>
-      {prestamos.length === 0 ? (
+      {prestamosData.length === 0 ? (
         <p>No tienes préstamos registrados.</p>
       ) : (
         <table class="table table-striped table-hover">
@@ -20,7 +23,7 @@ const Prestamos = ({ prestamos }) => {
             </tr>
           </thead>
           <tbody>
-            {prestamos.map((prestamo) => (
+            {prestamosData.map((prestamo) => (
               <tr key={prestamo.id}>
                 <td>{prestamo.id}</td>
                 <td>S/. {prestamo.monto}</td>

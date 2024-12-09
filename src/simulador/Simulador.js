@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SolicitarForm from './solicitar';
 import Prestamos from './prestamos';
+import HistorialPagos from './historialPagos';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -64,7 +65,7 @@ const Simulador = () => {
       laborando: value,
     }));
   };
-  
+
   const handlePropiedadesChange = (e) => {
     const value = e.target.value === "true"; // Convierte a booleano
     setFormData((prevData) => ({
@@ -72,7 +73,7 @@ const Simulador = () => {
       propiedades: value,
     }));
   };
-  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -104,10 +105,18 @@ const Simulador = () => {
         });
         return;
       } else {
-        setIsApproved(true);
-        procesaAprobado();
+        Swal.fire({
+          title: 'Felicidades!',
+          text: '¡Tienes un préstamo aprobado!',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }).then(() => {
+          setIsApproved(true);
+          procesaAprobado();
+        });
+
       }
-      
+
     }, 3000);
   };
 
@@ -119,7 +128,7 @@ const Simulador = () => {
     const anio = fechaHoy.getFullYear();
     const fechaFormateada = `${dia.toString().padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${anio}`;
 
-    console.log("isApproved: ",  isApproved);
+    console.log("isApproved: ", isApproved);
     // Guardar el préstamo
     const newPrestamo = {
       ...formData,
@@ -130,7 +139,7 @@ const Simulador = () => {
       fecha: fechaFormateada,
       cuota: obtenerCuotaMensual(formData.monto, formData.plazo),
     };
-    
+
 
     const updatedPrestamos = [...prestamos, newPrestamo];
     setPrestamos(updatedPrestamos);
@@ -243,11 +252,16 @@ const Simulador = () => {
           <h2>Mis prestamos</h2>
           {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
           <Prestamos
-            prestamos={prestamos}
           />
         </div>
       )}
-      {selectedOption === 'historial' && <p>Historial de pagos</p>}
+      {selectedOption === 'historial' && (
+        <div>
+          <h2>Historial de pagos</h2>
+          <HistorialPagos
+          />
+        </div>
+      )}
       {selectedOption === 'configuracion' && <p>Configuración</p>}
     </div>
   );
