@@ -184,7 +184,7 @@ const Simulador = () => {
     };
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-fondo-azul">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -192,20 +192,20 @@ const Simulador = () => {
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link pointer" onClick={() => setSelectedOption('solicitar')}>Solicitar préstamo</a>
+                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('solicitar')}>Solicitar préstamo</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link pointer" onClick={() => setSelectedOption('verPrestamos')}>Ver mis préstamos</a>
+                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('verPrestamos')}>Ver mis préstamos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link pointer" onClick={() => setSelectedOption('historial')}>Historial de pagos</a>
+                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('historial')}>Historial de pagos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link pointer" onClick={() => setSelectedOption('configuracion')}>Configuración</a>
+                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('configuracion')}>Configuración</a>
               </li>
             </ul>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 {nombre}
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -225,10 +225,9 @@ const Simulador = () => {
     <div>
       {renderMenu()}
       <h1 className='text-center'>Bienvenido al Simulador de Préstamos</h1>
-      <p>Obtén tu préstamo 100% online!</p>
+      <p className='bg-fondo-beige'>Obtén tu préstamo 100% online!</p>
       {selectedOption === 'solicitar' && (
         <div>
-          <h3>Formulario de Solicitud de Préstamo</h3>
           {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
           <SolicitarForm
             formData={formData}

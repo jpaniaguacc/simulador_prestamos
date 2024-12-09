@@ -103,7 +103,6 @@ const HistorialPagos = () => {
 
     return (
         <div>
-            <h2>Historial de Pagos</h2>
             {pagos.length === 0 ? (
                 <p>No tienes pagos registrados.</p>
             ) : (

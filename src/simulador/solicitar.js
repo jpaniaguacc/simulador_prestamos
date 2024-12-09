@@ -16,7 +16,7 @@ const SolicitarForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <div className='group-box-input'>
+      <div className='group-box-input col-auto'>
         <div className='group-input'>
           <label htmlFor="estadoCivil">Estado Civil:</label>
           <select
@@ -24,6 +24,7 @@ const SolicitarForm = ({
             name="estadoCivil"
             value={formData.estadoCivil}
             onChange={handleChange}
+            class="form-select"
             required
           >
             <option value="">Seleccione un estado civil</option>
@@ -45,6 +46,7 @@ const SolicitarForm = ({
             min="500"
             max="10000"
             required
+            class="form-control"
           />
           <span>Min. S/. 500.00 | Max. S/. 10,000.00</span>
         </div>
@@ -53,6 +55,7 @@ const SolicitarForm = ({
         <div className='group-input'>
           <label htmlFor="sueldo">Sueldo actual:</label>
           <input
+          class="form-control"
             type="number"
             id="sueldo"
             name="sueldo"
@@ -65,6 +68,7 @@ const SolicitarForm = ({
         <div className='group-input'>
           <label htmlFor="plazo">Plazo (días):</label>
           <select
+          class="form-select"
             id="plazo"
             name="plazo"
             value={formData.plazo}
@@ -82,6 +86,7 @@ const SolicitarForm = ({
         <div className='group-input'>
           <label htmlFor="nivelEstudio">Nivel de estudio:</label>
           <select
+          class="form-select"
             id="nivelEstudio"
             name="nivelEstudio"
             value={formData.nivelEstudio}
@@ -99,6 +104,7 @@ const SolicitarForm = ({
         <div className='group-input'>
           <label htmlFor="motivoPrestamo">Motivo del préstamo:</label>
           <select
+          class="form-select"
             id="motivoPrestamo"
             name="motivoPrestamo"
             value={formData.motivoPrestamo}
@@ -188,7 +194,7 @@ const SolicitarForm = ({
         />
       </div>
 
-      <button type="submit" disabled={loading} className="btn btn-success">
+      <button type="submit" disabled={loading} className="btn bg-fondo-azul text-white">
         {loading ? <span>Loading...</span> : 'Solicitar préstamo'}
       </button>
     </form>

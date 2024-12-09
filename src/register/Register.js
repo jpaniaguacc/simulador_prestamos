@@ -79,7 +79,7 @@ const Register = ({ onSwitchToLogin }) => {
             icon: 'success',
             confirmButtonText: 'Aceptar'
         }).then(() => {
-            navigate('/'); // Redirige al login
+            navigate('/login'); // Redirige al login
         });
 
 
