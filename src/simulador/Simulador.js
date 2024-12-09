@@ -192,16 +192,16 @@ const Simulador = () => {
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('solicitar')}>Solicitar préstamo</a>
+                <button class="nav-link pointer text-white" onClick={() => setSelectedOption('solicitar')}>Solicitar préstamo</button>
               </li>
               <li class="nav-item">
-                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('verPrestamos')}>Ver mis préstamos</a>
+                <button class="nav-link pointer text-white" onClick={() => setSelectedOption('verPrestamos')}>Ver mis préstamos</button>
               </li>
               <li class="nav-item">
-                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('historial')}>Historial de pagos</a>
+                <button class="nav-link pointer text-white" onClick={() => setSelectedOption('historial')}>Historial de pagos</button>
               </li>
               <li class="nav-item">
-                <a class="nav-link pointer text-white" onClick={() => setSelectedOption('configuracion')}>Configuración</a>
+                <button class="nav-link pointer text-white" onClick={() => setSelectedOption('configuracion')}>Configuración</button>
               </li>
             </ul>
             <div class="dropdown">
@@ -209,9 +209,9 @@ const Simulador = () => {
                 {nombre}
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li class="text-center"><a class="dropdown-item center pointer" >{nombre + " " + apellido}</a></li>
-                <li class="text-center"><a class="dropdown-item pointer" >{email}</a></li>
-                <li class="text-center"><a class="dropdown-item pointer" onClick={() => handleLogout()}>Salir</a></li>
+                <li class="text-center"><button class="dropdown-item center pointer" >{nombre + " " + apellido}</button></li>
+                <li class="text-center"><button class="dropdown-item pointer" >{email}</button></li>
+                <li class="text-center"><button class="dropdown-item pointer" onClick={() => handleLogout()}>Salir</button></li>
               </ul>
             </div>
           </div>

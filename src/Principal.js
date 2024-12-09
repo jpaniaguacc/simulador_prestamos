@@ -28,7 +28,7 @@ const Principal = () => {
           />
           <h1 className="display-4 fw-bold">¡Bienvenido a CREDIYA!</h1>
           <p className="lead">Préstamos rápidos, fáciles y confiables</p>
-          <p className="lead"><a class="nav-link pointer text-warning fw-bold" onClick={handleGoToLogin}>Solicita tu prestamo AQUI.</a></p>
+          <p className="lead"><button class="nav-link pointer text-warning fw-bold" onClick={handleGoToLogin}>Solicita tu prestamo AQUI.</button></p>
         </div>
       </div>
 

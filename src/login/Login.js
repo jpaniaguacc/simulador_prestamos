@@ -77,7 +77,7 @@ const Login = () => {
         <button onClick={handleGoToRegister}>Regístrate aquí</button>
       </p>
       <p>
-      <a class="nav-link pointer" onClick={handleGoToFinalizar}>Finalizar simulación</a>
+      <label class="pointer text-warning fw-bold" onClick={handleGoToFinalizar}>Finalizar simulación</label>
       </p>
     </div>
   );
