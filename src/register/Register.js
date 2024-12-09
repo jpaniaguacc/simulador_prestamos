@@ -34,7 +34,24 @@ const Register = ({ onSwitchToLogin }) => {
             return;
         }
 
+        const userData = {
+            nombre,
+            apellido,
+            dni,
+            edad,
+            email,
+            password,
+            departamento,
+            distrito,
+            telefono,
+        };
+    
+        localStorage.setItem('userData', JSON.stringify(userData));
+
+
         alert('¡Registro exitoso!');
+        navigate('/');
+
 
     };
 

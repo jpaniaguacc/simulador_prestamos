@@ -1,79 +1,17 @@
-// src/login/Login.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Importa useNavigate
+import React from 'react';
 
-const Solicitar = () => {
-
-    const [selectedOption, setSelectedOption] = useState('solicitar');
-  const [formData, setFormData] = useState({
-    monto: '',
-    sueldo: '',
-    plazo: '',
-    nivelEstudio: '',
-    motivoPrestamo: '',
-    estaLaborando: false,
-    noEstaLaborando: false,
-    terminosAceptados: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const [isApproved, setIsApproved] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [laborando, setLaborando] = useState("");
-  const [propiedades, setPropiedades] = useState("");
-
-  // Opciones para el select
-  const nivelesEstudio = ['Primaria', 'Secundaria', 'Universitario', 'Postgrado'];
-  const motivosPrestamo = ['Compra de vivienda', 'Educación', 'Salud', 'Otros'];
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessage('');
-    setIsApproved(false);
-
-    // Validación de monto
-    if (formData.monto < 500 || formData.monto > 10000) {
-      setErrorMessage('El monto debe estar entre 500 y 10,000 soles.');
-      setLoading(false);
-      return;
-    }
-
-    // Validación de sueldo
-    if (formData.sueldo < 0) {
-      setErrorMessage('El sueldo no puede ser negativo.');
-      setLoading(false);
-      return;
-    }
-
-    // Validación de plazo
-    if (!formData.plazo) {
-      setErrorMessage('Elige un plazo.');
-      setLoading(false);
-      return;
-    }
-
-    // Validación de términos y condiciones
-    if (!formData.terminosAceptados) {
-      setErrorMessage('Debes aceptar los términos y condiciones.');
-      setLoading(false);
-      return;
-    }
-
-    // Simulación de aprobación
-    setTimeout(() => {
-      setIsApproved(true);
-      setLoading(false);
-    }, 3000); // Simulamos un proceso de 2 segundos
-  };
-    
+const SolicitarForm = ({
+  formData,
+  laborando,
+  propiedades,
+  nivelesEstudio,
+  motivosPrestamo,
+  handleChange,
+  setLaborando,
+  setPropiedades,
+  handleSubmit,
+  loading,
+}) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className='group-box-input'>
@@ -106,6 +44,7 @@ const Solicitar = () => {
             max="10000"
             required
           />
+          <span>Min. S/. 500.00 | Max. S/. 10,000.00</span>
         </div>
       </div>
       <div className='group-box-input'>
@@ -210,10 +149,10 @@ const Solicitar = () => {
               className="input-radio"
               type="radio"
               id="propiedadesSi"
-              name="propiedades"  
+              name="propiedades"
               value="Sí"
               checked={propiedades === "Sí"}
-              onChange={(e) => setPropiedades(e.target.value)}  
+              onChange={(e) => setPropiedades(e.target.value)}
               required
             />
             <label htmlFor="propiedadesSi">Sí</label>
@@ -222,10 +161,10 @@ const Solicitar = () => {
               className="input-radio"
               type="radio"
               id="propiedadesNo"
-              name="propiedades"  
+              name="propiedades"
               value="No"
               checked={propiedades === "No"}
-              onChange={(e) => setPropiedades(e.target.value)}  
+              onChange={(e) => setPropiedades(e.target.value)}
               required
             />
             <label htmlFor="propiedadesNo">No</label>
@@ -233,7 +172,7 @@ const Solicitar = () => {
         </div>
       </div>
 
-      <div>
+      <div className='contenedor-terminos'>
         <label htmlFor="terminosAceptados">
           Acepto los términos y condiciones
         </label>
@@ -248,14 +187,10 @@ const Solicitar = () => {
       </div>
 
       <button type="submit" disabled={loading}>
-        {loading ? (
-          <span>Loading...</span> // Aquí podrías agregar un spinner
-        ) : (
-          'Solicitar préstamo'
-        )}
+        {loading ? <span>Loading...</span> : 'Solicitar préstamo'}
       </button>
     </form>
   );
 };
 
-export default Solicitar;
+export default SolicitarForm;

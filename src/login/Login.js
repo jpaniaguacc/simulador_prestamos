@@ -10,17 +10,20 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Aquí iría la lógica de autenticación (llamada a API, etc.)
-    console.log('Email:', email);
-    console.log('Password:', password);
+    const savedUserData = JSON.parse(localStorage.getItem('userData'));
 
-    // Verificar si las credenciales son correctas
-    if (email === "dpino@gmail.com" && password === "1234") {
-      navigate('/simulador'); // Redirige al simulador
-    } else {
-      alert("Credenciales incorrectas");
+    if (!savedUserData) {
+        alert('No hay usuarios registrados. Por favor, regístrate primero.');
+        return;
     }
-  };
+
+    if (email === savedUserData.email && password === savedUserData.password) {
+        navigate('/simulador'); 
+    } else {
+        alert('Credenciales incorrectas');
+    }
+};
+
 
   const handleGoToRegister = () => {
     navigate('/register'); // Redirige a la página de registro
