@@ -16,18 +16,18 @@ const SolicitarForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <div className='group-box-input col-auto'>
-        <div className='group-input'>
-          <label htmlFor="estadoCivil">Estado Civil:</label>
+      <div className='row'>
+        <div className='col-6'>
+          <label htmlFor="estadoCivil" class="form-label">Estado Civil:</label>
           <select
+            class="form-select"
             id="estadoCivil"
             name="estadoCivil"
             value={formData.estadoCivil}
             onChange={handleChange}
-            class="form-select"
             required
           >
-            <option value="">Seleccione un estado civil</option>
+            <option value="" selected>Seleccione un estado civil</option>
             <option value="Soltero">Soltero</option>
             <option value="Casado">Casado</option>
             <option value="Divorciado">Divorciado</option>
@@ -35,8 +35,8 @@ const SolicitarForm = ({
           </select>
         </div>
 
-        <div className='group-input'>
-          <label htmlFor="monto">Monto del préstamo:</label>
+        <div className='col-6'>
+          <label htmlFor="monto" class="form-label">Monto del préstamo:</label>
           <input
             type="number"
             id="monto"
@@ -51,11 +51,11 @@ const SolicitarForm = ({
           <span>Min. S/. 500.00 | Max. S/. 10,000.00</span>
         </div>
       </div>
-      <div className='group-box-input'>
-        <div className='group-input'>
-          <label htmlFor="sueldo">Sueldo actual:</label>
+      <div className='row'>
+        <div className='col-6'>
+          <label htmlFor="sueldo" class="form-label">Sueldo actual:</label>
           <input
-          class="form-control"
+            class="form-control"
             type="number"
             id="sueldo"
             name="sueldo"
@@ -65,28 +65,28 @@ const SolicitarForm = ({
           />
         </div>
 
-        <div className='group-input'>
-          <label htmlFor="plazo">Plazo (días):</label>
+        <div className='col-6'>
+          <label htmlFor="plazo" class="form-label">Plazo (días):</label>
           <select
-          class="form-select"
+            class="form-select"
             id="plazo"
             name="plazo"
             value={formData.plazo}
             onChange={handleChange}
             required
           >
-            <option value="">Seleccione un plazo</option>
+            <option value="" selected>Seleccione un plazo</option>
             <option value="30">30 días</option>
             <option value="60">60 días</option>
             <option value="90">90 días</option>
           </select>
         </div>
       </div>
-      <div className='group-box-input'>
-        <div className='group-input'>
-          <label htmlFor="nivelEstudio">Nivel de estudio:</label>
+      <div className='row'>
+        <div className='col-6'>
+          <label htmlFor="nivelEstudio" class="form-label">Nivel de estudio:</label>
           <select
-          class="form-select"
+            class="form-select"
             id="nivelEstudio"
             name="nivelEstudio"
             value={formData.nivelEstudio}
@@ -101,10 +101,10 @@ const SolicitarForm = ({
             ))}
           </select>
         </div>
-        <div className='group-input'>
-          <label htmlFor="motivoPrestamo">Motivo del préstamo:</label>
+        <div className='col-6'>
+          <label htmlFor="motivoPrestamo" class="form-label">Motivo del préstamo:</label>
           <select
-          class="form-select"
+            class="form-select"
             id="motivoPrestamo"
             name="motivoPrestamo"
             value={formData.motivoPrestamo}
@@ -122,10 +122,10 @@ const SolicitarForm = ({
       </div>
       <div className='group-box-input'>
         <div className="group-input">
-          <label htmlFor="laborando">¿Está laborando?</label>
+          <label htmlFor="laborando" class="form-label">¿Está laborando?</label>
           <div className="group-input-radio">
             <input
-              className="input-radio"
+              class="form-check-input"
               type="radio"
               id="laborandoSí"
               name="laborando"
@@ -137,7 +137,7 @@ const SolicitarForm = ({
             <label htmlFor="laborandoSí">Sí</label>
 
             <input
-              className="input-radio"
+              class="form-check-input"
               type="radio"
               id="laborandoNo"
               name="laborando"
@@ -151,10 +151,10 @@ const SolicitarForm = ({
         </div>
 
         <div className="group-input">
-          <label htmlFor="propiedades">¿Posees propiedades a tu nombre?</label>
+          <label htmlFor="propiedades" class="form-label">¿Posees propiedades a tu nombre?</label>
           <div className="group-input-radio">
             <input
-              className="input-radio"
+              class="form-check-input"
               type="radio"
               id="propiedadesSi"
               name="propiedades"
@@ -166,7 +166,7 @@ const SolicitarForm = ({
             <label htmlFor="propiedadesSi">Sí</label>
 
             <input
-              className="input-radio"
+              class="form-check-input"
               type="radio"
               id="propiedadesNo"
               name="propiedades"
@@ -181,11 +181,12 @@ const SolicitarForm = ({
       </div>
 
       <div className='contenedor-terminos'>
-        <label htmlFor="terminosAceptados">
+        <label htmlFor="terminosAceptados" class="form-label">
           Acepto los términos y condiciones
         </label>
         <input
           type="checkbox"
+          class="form-check-input"
           id="terminosAceptados"
           name="terminosAceptados"
           checked={formData.terminosAceptados}

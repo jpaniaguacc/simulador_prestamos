@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Importa useNavigate
 import Swal from 'sweetalert2';
+import useIsMobile from "../useIsMobile";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -41,13 +42,17 @@ const Login = () => {
     navigate('/register');
   };
 
+  const handleGoToPagPrincipal = () => {
+    navigate('/');
+  };
+
   const handleGoToFinalizar = () => {
     localStorage.removeItem('userData');
     localStorage.removeItem('prestamos');
   };
-
+  const isMobile = useIsMobile();
   return (
-    <div className="login-container">
+    <div className={isMobile ? "login-container-mobile" : "login-container"}>
       <h2 className="title-login">Login</h2>
       <form onSubmit={handleLogin}>
         <div className="group-input">
@@ -75,6 +80,9 @@ const Login = () => {
       <p>
         No tienes cuenta?{' '}
         <button onClick={handleGoToRegister}>Regístrate aquí</button>
+      </p>
+      <p>
+        <button className='btn btn-success' onClick={handleGoToPagPrincipal}>Pagina principal</button>
       </p>
       <p>
       <label class="pointer text-warning fw-bold" onClick={handleGoToFinalizar}>Finalizar simulación</label>

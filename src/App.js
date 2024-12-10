@@ -10,7 +10,7 @@ import Simulador from './simulador/Simulador';  // Componente del simulador de p
 function App() {
   return (
     <Router>
-      <div className="app-container">
+      <div className='container d-flex justify-content-center'>
         <Routes>
           <Route path="/" element={<Principal />} />
           <Route path="/login" element={<Login />}/>

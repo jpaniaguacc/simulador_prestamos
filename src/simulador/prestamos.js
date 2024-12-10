@@ -5,7 +5,7 @@ const Prestamos = () => {
     const prestamosData = JSON.parse(localStorage.getItem('prestamos')) || [];
 
   return (
-    <div>
+    <div className='container'>
       <h2>Detalle de Préstamos Realizados</h2>
       {prestamosData.length === 0 ? (
         <p>No tienes préstamos registrados.</p>

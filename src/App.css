@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .App {
@@ -15,25 +14,46 @@
   background-color: #f4f4f9;
 }
 
-.login-container,
+.login-container{
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  margin-top: 200px;
+}
+
+.login-container-mobile{
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 200px;
+}
+
 .register-container {
   background-color: aliceblue;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 500px;
+  margin-top: 60px;
+}
+
+.register-container-mobile {
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ /**width: 400px;*/
+  margin-top: 50px;
 }
 
 form div {
   margin-bottom: 15px;
 }
 
-form input {
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 
 button {
   width: 100%;

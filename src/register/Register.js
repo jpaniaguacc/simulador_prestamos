@@ -1,7 +1,8 @@
 // src/Register.js
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useIsMobile from "../useIsMobile";
 
 const Register = ({ onSwitchToLogin }) => {
     const [email, setEmail] = useState('');
@@ -69,7 +70,7 @@ const Register = ({ onSwitchToLogin }) => {
             distrito,
             telefono,
         };
-    
+
         localStorage.setItem('userData', JSON.stringify(userData));
 
 
@@ -86,17 +87,24 @@ const Register = ({ onSwitchToLogin }) => {
     };
 
     const handleGoToRLogin = () => {
-        navigate('/'); // Redirige a la página de registro
+        navigate('/login'); // Redirige a la página de registro
     };
 
+    const isMobile = useIsMobile();
+
+    console.log("isMobile: ", isMobile);
+
+
+
     return (
-        <div className="register-container">
+        <div className={isMobile ? "register-container-mobile" : "register-container"}>
             <h2 className='title-register'>Registro</h2>
             <form onSubmit={handleRegister}>
                 <div className='group-box-input'>
                     <div className='group-input'>
-                        <label htmlFor="nombre">Nombres:</label>
+                        <label htmlFor="nombre" class="form-label">Nombres:</label>
                         <input
+                            class="form-control"
                             type="text"
                             id="nombre"
                             value={nombre}
@@ -105,8 +113,9 @@ const Register = ({ onSwitchToLogin }) => {
                         />
                     </div>
                     <div className='group-input'>
-                        <label htmlFor="apellido">Apellidos:</label>
+                        <label htmlFor="apellido" class="form-label">Apellidos:</label>
                         <input
+                            class="form-control"
                             type="text"
                             id="apellido"
                             value={apellido}
@@ -117,8 +126,9 @@ const Register = ({ onSwitchToLogin }) => {
                 </div>
                 <div className='group-box-input'>
                     <div className='group-input'>
-                        <label htmlFor="dni">Dni:</label>
+                        <label htmlFor="dni" class="form-label">Dni:</label>
                         <input
+                            class="form-control"
                             type="number"
                             id="dni"
                             value={dni}
@@ -127,8 +137,9 @@ const Register = ({ onSwitchToLogin }) => {
                         />
                     </div>
                     <div className='group-input'>
-                        <label htmlFor="edad">Edad:</label>
+                        <label htmlFor="edad" class="form-label">Edad:</label>
                         <input
+                            class="form-control"
                             type="number"
                             id="edad"
                             value={edad}
@@ -138,14 +149,15 @@ const Register = ({ onSwitchToLogin }) => {
                     </div>
                 </div>
                 <div className="group-input">
-                    <label htmlFor="departamento">Departamento:</label>
+                    <label htmlFor="departamento" class="form-label">Departamento:</label>
                     <select
+                        class="select-control"
                         id="departamento"
                         value={departamento}
                         onChange={(e) => setDepartamento(e.target.value)}
                         required
                     >
-                        <option value="">Selecciona un departamento</option>
+                        <option value="" >Selecciona un departamento</option>
                         {departamentos.map((dep) => (
                             <option key={dep} value={dep}>
                                 {dep}
@@ -155,8 +167,9 @@ const Register = ({ onSwitchToLogin }) => {
                 </div>
                 {departamento && (
                     <div className="group-input">
-                        <label htmlFor="distrito">Distrito:</label>
+                        <label htmlFor="distrito" class="form-label">Distrito:</label>
                         <select
+                            class="select-control"
                             id="distrito"
                             value={distrito}
                             onChange={(e) => setDistrito(e.target.value)}
@@ -173,8 +186,9 @@ const Register = ({ onSwitchToLogin }) => {
                 )}
                 <div className='group-box-input'>
                     <div className='group-input'>
-                        <label htmlFor="telefono">Telefono:</label>
+                        <label htmlFor="telefono" class="form-label">Telefono:</label>
                         <input
+                            class="form-control"
                             type="number"
                             id="telefono"
                             value={telefono}
@@ -183,8 +197,9 @@ const Register = ({ onSwitchToLogin }) => {
                         />
                     </div>
                     <div className='group-input'>
-                        <label htmlFor="email">Email (Este sera tu usuario):</label>
+                        <label htmlFor="email" class="form-label">Email (Tu usuario):</label>
                         <input
+                            class="form-control"
                             type="email"
                             id="email"
                             value={email}
@@ -196,8 +211,9 @@ const Register = ({ onSwitchToLogin }) => {
                 <div className='group-box-input'>
 
                     <div className='group-input'>
-                        <label htmlFor="password">Password:</label>
+                        <label htmlFor="password" class="form-label">Password:</label>
                         <input
+                            class="form-control"
                             type="password"
                             id="password"
                             value={password}
@@ -206,8 +222,9 @@ const Register = ({ onSwitchToLogin }) => {
                         />
                     </div>
                     <div className="group-input">
-                        <label htmlFor="confirm-password">Confirmar Password:</label>
+                        <label htmlFor="confirm-password" class="form-label">Confirmar Password:</label>
                         <input
+                            class="form-control"
                             type="password"
                             id="confirm-password"
                             value={confirmPassword}

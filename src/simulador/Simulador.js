@@ -222,7 +222,7 @@ const Simulador = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       {renderMenu()}
       <h1 className='text-center'>Bienvenido al Simulador de Préstamos</h1>
       <p className='bg-fondo-beige'>Obtén tu préstamo 100% online!</p>
